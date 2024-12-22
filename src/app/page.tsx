@@ -1,9 +1,7 @@
-import GridMap from '@/components/GridMap';
-
 export default function Home() {
   return (
     <div>
-      <GridMap />
+      <h1>TOPページ</h1>
     </div>
   );
 }
