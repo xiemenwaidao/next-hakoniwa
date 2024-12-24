@@ -1,9 +1,19 @@
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Bell, Settings, User } from 'lucide-react';
+import { Bell, Settings } from 'lucide-react';
+import Link from 'next/link';
+import { jaJP } from '@clerk/localizations';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,85 +36,76 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="min-h-screen bg-zinc-950 text-zinc-200">
-          {/* ヘッダー */}
-          <header className="sticky top-0 p-4">
-            <div className="container mx-auto">
-              <Card className="backdrop-blur-sm bg-zinc-900/50 border-zinc-800 rounded-lg shadow-lg shadow-zinc-900/20">
-                <div className="px-4">
-                  <div className="grid grid-cols-12 h-14 items-center">
-                    {/* ロゴエリア */}
-                    <div className="col-span-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-indigo-500 rounded-md"></div>
-                        <span className="font-bold text-lg text-zinc-100">
-                          箱庭諸島N
-                        </span>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        // variables: { colorPrimary: 'blue' },
+      }}
+      localization={jaJP}
+    >
+      <html lang="ja" className="dark">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <div className="min-h-screen bg-zinc-950 text-zinc-200">
+            {/* ヘッダー */}
+            <header className="sticky top-0 p-4">
+              <div className="container mx-auto">
+                <Card className="backdrop-blur-sm bg-zinc-900/50 border-zinc-800 rounded-lg shadow-lg shadow-zinc-900/20">
+                  <div className="px-4">
+                    <div className="grid grid-cols-12 h-14 items-center">
+                      {/* ロゴエリア */}
+                      <div className="col-span-4">
+                        <Link
+                          href="/"
+                          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                        >
+                          <div className="w-8 h-8 bg-indigo-500 rounded-md"></div>
+                          <span className="font-bold text-lg text-zinc-100">
+                            Logo
+                          </span>
+                        </Link>
+                      </div>
+
+                      {/* 中央スペース */}
+                      <div className="col-span-4"></div>
+
+                      {/* ナビゲーション */}
+                      <div className="col-span-4">
+                        <nav className="flex justify-end items-center gap-4">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+                          >
+                            <Bell size={20} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+                          >
+                            <Settings size={20} />
+                          </Button>
+                          <SignedOut>
+                            <SignInButton />
+                          </SignedOut>
+                          <SignedIn>
+                            <UserButton />
+                          </SignedIn>
+                        </nav>
                       </div>
                     </div>
-
-                    {/* 中央スペース */}
-                    <div className="col-span-4"></div>
-
-                    {/* ナビゲーション */}
-                    <div className="col-span-4">
-                      <nav className="flex justify-end items-center gap-4">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
-                        >
-                          <Bell size={20} />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
-                        >
-                          <Settings size={20} />
-                        </Button>
-                        <Button className="bg-indigo-600 hover:bg-indigo-700">
-                          <User size={18} className="mr-2" />
-                          <span>Login</span>
-                        </Button>
-                      </nav>
-                    </div>
                   </div>
-                </div>
-              </Card>
-            </div>
-          </header>
+                </Card>
+              </div>
+            </header>
 
-          {/* スクロールテスト用セクション */}
-          <main className="container mx-auto px-4 space-y-8">
-            {children}
-
-            {/* セクション1 */}
-            <div className="h-screen bg-indigo-950/30 rounded-lg flex items-center justify-center">
-              <h2 className="text-4xl font-bold text-zinc-100">Section 1</h2>
-            </div>
-
-            {/* セクション2 */}
-            <div className="h-screen bg-blue-950/30 rounded-lg flex items-center justify-center">
-              <h2 className="text-4xl font-bold text-zinc-100">Section 2</h2>
-            </div>
-
-            {/* セクション3 */}
-            <div className="h-screen bg-emerald-950/30 rounded-lg flex items-center justify-center">
-              <h2 className="text-4xl font-bold text-zinc-100">Section 3</h2>
-            </div>
-
-            {/* セクション4 */}
-            <div className="h-screen bg-purple-950/30 rounded-lg flex items-center justify-center">
-              <h2 className="text-4xl font-bold text-zinc-100">Section 4</h2>
-            </div>
-          </main>
-        </div>
-      </body>
-    </html>
+            {/* スクロールテスト用セクション */}
+            <main className="container mx-auto px-4 space-y-8">{children}</main>
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
