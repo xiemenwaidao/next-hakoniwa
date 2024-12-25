@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Bell, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { jaJP } from '@clerk/localizations';
+import { LogoSVG } from '@/components/LogoSVG';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -60,10 +61,11 @@ export default function RootLayout({
                           href="/"
                           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
                         >
-                          <div className="w-8 h-8 bg-indigo-500 rounded-md"></div>
-                          <span className="font-bold text-lg text-zinc-100">
-                            Logo
-                          </span>
+                          {/* <div className="w-8 h-8 bg-indigo-500 rounded-md"></div> */}
+                          <LogoSVG />
+                          {/* <span className="font-bold text-lg text-zinc-100">
+                            {siteConfig.name}
+                          </span> */}
                         </Link>
                       </div>
 
